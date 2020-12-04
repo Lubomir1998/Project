@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 class MainViewModel @ViewModelInject constructor(private val repository: Repository): ViewModel() {
 
     val teamsList = repository.getTeamWithPlayers()
+    val allPlayers = repository.getAllPlayers()
 
     fun addPlayer(player: Player){
         viewModelScope.launch {

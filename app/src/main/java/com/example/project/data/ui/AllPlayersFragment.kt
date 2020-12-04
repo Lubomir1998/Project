@@ -1,6 +1,7 @@
 package com.example.project.data.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,67 +11,73 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project.MainViewModel
 import com.example.project.R
+import com.example.project.adapters.PlayerAdapter
 import com.example.project.adapters.TeamAdapter
+import com.example.project.data.entities.Player
 import com.example.project.data.entities.Team
 import com.example.project.data.relations.TeamWithPlayers
-import com.example.project.databinding.MainScreenFragmentBinding
+import com.example.project.databinding.AddTeamsBinding
+import com.example.project.databinding.AllPlayersFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainScreenFragment: Fragment(R.layout.main_screen_fragment) {
+class AllPlayersFragment: Fragment(R.layout.all_players_fragment) {
 
-    private lateinit var binding: MainScreenFragmentBinding
+    private lateinit var binding: AllPlayersFragmentBinding
     private val model: MainViewModel by viewModels()
-    private var listTeams = listOf<TeamWithPlayers>()
-    private lateinit var listener: TeamAdapter.AddListener
-    private lateinit var mAdapter: TeamAdapter
+
+    private var listPlayers = listOf<Player>()
+    private lateinit var listener: PlayerAdapter.OnDeleteListener
+    private lateinit var mAdapter: PlayerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = MainScreenFragmentBinding.inflate(inflater, container, false)
+        binding = AllPlayersFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listener = object : TeamAdapter.AddListener {
+        listener = object : PlayerAdapter.OnDeleteListener {
 
-            override fun deleteTeam(team: Team) {
-                model.deleteTeam(team)
+            override fun deletePlayer(player: Player) {
+                model.deletePlayer(player)
             }
         }
 
-        mAdapter = TeamAdapter(listTeams, listener)
+        mAdapter = PlayerAdapter(listPlayers, listener)
 
-
-        model.teamsList.observe(requireActivity(), {
-            displayData(it)
+        model.allPlayers.observe(requireActivity(), {
+            listPlayers = it
+            displayData(listPlayers)
         })
 
-        binding.recyclerView.apply {
+
+        binding.playersRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
             setHasFixedSize(true)
         }
 
 
-        binding.viewAllPlayers.setOnClickListener {
-            findNavController().navigate(R.id.action_mainScreenFragment_to_allPlayersFragment)
+        binding.addPlayerImg.setOnClickListener {
+            findNavController().navigate(R.id.action_allPlayersFragment_to_addPlayerFragment)
         }
 
-
-
-
     }
 
-    private fun displayData(list: List<TeamWithPlayers>){
-        mAdapter.listOfTeams = list
+
+
+
+
+    private fun displayData(list: List<Player>){
+        mAdapter.listOfPlayers = list
         mAdapter.notifyDataSetChanged()
     }
-
 
 }

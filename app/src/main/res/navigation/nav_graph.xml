@@ -8,12 +8,8 @@
         android:name="com.example.project.data.ui.MainScreenFragment"
         android:label="MainScreenFragment" >
         <action
-            android:id="@+id/action_mainScreenFragment_to_addPlayerFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:destination="@id/addPlayerFragment" />
+            android:id="@+id/action_mainScreenFragment_to_allPlayersFragment"
+            app:destination="@id/allPlayersFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPlayerFragment"
@@ -31,4 +27,16 @@
         android:id="@+id/addTeamsFragment"
         android:name="com.example.project.data.ui.AddTeamsFragment"
         android:label="AddTeamsFragment" />
+    <fragment
+        android:id="@+id/allPlayersFragment"
+        android:name="com.example.project.data.ui.AllPlayersFragment"
+        android:label="AllPlayersFragment" >
+        <action
+            android:id="@+id/action_allPlayersFragment_to_addPlayerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/addPlayerFragment" />
+    </fragment>
 </navigation>

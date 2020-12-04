@@ -26,6 +26,9 @@ interface Dao {
     @Query("SELECT * FROM team")
     fun getTeamWithPlayers(): LiveData<List<TeamWithPlayers>>
 
+    @Query("SELECT * FROM player")
+    fun getAllPlayers(): LiveData<List<Player>>
+
 
 
 }

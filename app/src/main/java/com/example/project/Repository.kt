@@ -17,6 +17,8 @@ class Repository @Inject constructor(private val dao: Dao){
 
     fun getTeamWithPlayers() = dao.getTeamWithPlayers()
 
+    fun getAllPlayers() = dao.getAllPlayers()
+
 
 
 
